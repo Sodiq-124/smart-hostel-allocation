@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administrator login —  Smart Hostel Allocation System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/auth.css" />
+</head>
+<body class="auth-body is-admin">
+  <div class="auth-shell">
+
+    <aside class="auth-identity">
+      <span class="auth-mark glass-card"><i class="fa-solid fa-user-shield"></i>  Smart Hostel</span>
+      <div>
+        <h1>Administrator access.</h1>
+        <p>Manage rooms, review applications, allocate hostel spaces, and monitor payments.</p>
+      </div>
+      <div class="auth-identity-footer glass-card">Restricted to hostel management staff</div>
+    </aside>
+
+    <section class="auth-form-panel">
+      <div class="auth-form-card glass-form-card">
+        <a class="auth-back" href="/index.html"><i class="fa-solid fa-arrow-left"></i> Back to home</a>
+
+        <h2>Administrator login</h2>
+        <p class="auth-sub">This area is restricted to hostel administrators.</p>
+
+        <div class="alert" id="form-alert" role="alert"></div>
+
+        <form id="admin-login-form" novalidate>
+          <div class="field">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" autocomplete="email" required />
+            <div class="field-error"></div>
+          </div>
+
+          <div class="field field-password">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" autocomplete="current-password" required />
+            <button type="button" class="field-password-toggle" id="toggle-password" aria-label="Show password">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+            <div class="field-error"></div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">Log in</button>
+        </form>
+
+        <p class="auth-footer-link">
+          <a href="/login.html">Student login</a>
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    initPasswordToggle(document.getElementById('toggle-password'), document.getElementById('password'));
+  </script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Miscellaneous charges —  Smart Hostel Allocation System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body class="app-body">
+
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><i class="fa-solid fa-user-shield"></i>  Smart Hostel</div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-link" href="/admin/applications.html"><i class="fa-solid fa-file-lines"></i> Applications</a>
+      <a class="sidebar-link" href="/admin/rooms.html"><i class="fa-solid fa-door-open"></i> Rooms</a>
+      <a class="sidebar-link" href="/admin/sessions.html"><i class="fa-solid fa-calendar-days"></i> Sessions</a>
+      <a class="sidebar-link" href="/admin/fees.html"><i class="fa-solid fa-naira-sign"></i> Hostel Fees</a>
+      <a class="sidebar-link" href="/admin/misc-charges.html"><i class="fa-solid fa-receipt"></i> Misc. Charges</a>
+      <a class="sidebar-link" href="/admin/renewals.html"><i class="fa-solid fa-rotate"></i> Renewals</a>
+      <a class="sidebar-link" href="/admin/complaints.html"><i class="fa-solid fa-comments"></i> Complaints</a>
+    </nav>
+    <div class="sidebar-foot">
+      <button class="sidebar-logout" data-action="logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="topbar">
+      <div class="row" style="gap: var(--sp-3)">
+        <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        <span class="topbar-title">Misc. Charges</span>
+      </div>
+      <div class="topbar-user">
+        <span class="badge is-hidden" id="topbar-session"></span>
+        <span id="topbar-user-name">—</span>
+        <span class="avatar" id="topbar-avatar">—</span>
+      </div>
+    </header>
+
+    <main class="app-content" id="misc-charges-root">
+      <div class="page-header">
+        <h1>Miscellaneous charges</h1>
+        <p>Extra charges students can pay online, separate from the hostel fee. A miscellaneous payment never counts as the hostel fee and never opens room allocation. Charges are never deleted: deactivate them to hide them from students.</p>
+      </div>
+
+      <div class="alert" id="misc-alert" role="alert"></div>
+
+      <section class="panel" style="margin-bottom: var(--sp-5); max-width: 720px">
+        <div class="panel-header"><h3 id="charge-form-title">New charge</h3></div>
+        <form id="charge-form" novalidate>
+          <input type="hidden" id="charge-id" value="" />
+          <div class="field">
+            <label for="charge-session">Session</label>
+            <select id="charge-session" name="hostel_session_id"></select>
+            <div class="field-error"></div>
+          </div>
+          <div class="field">
+            <label for="charge-name">Title</label>
+            <input type="text" id="charge-name" name="name" maxlength="150" autocomplete="off" />
+            <div class="field-error"></div>
+          </div>
+          <div class="field">
+            <label for="charge-description">Description (optional)</label>
+            <textarea id="charge-description" name="description" maxlength="2000"></textarea>
+            <div class="field-error"></div>
+          </div>
+          <div class="row" style="gap: var(--sp-4); flex-wrap: wrap">
+            <div class="field" style="flex: 1; min-width: 180px">
+              <label for="charge-amount">Amount (₦)</label>
+              <input type="text" inputmode="decimal" id="charge-amount" name="amount" placeholder="5000.00" autocomplete="off" />
+              <div class="field-error"></div>
+            </div>
+            <div class="field" style="flex: 1; min-width: 180px">
+              <label for="charge-block">Applies to</label>
+              <select id="charge-block" name="block_id"></select>
+              <div class="field-error"></div>
+            </div>
+          </div>
+          <div class="row" style="gap: var(--sp-4); flex-wrap: wrap">
+            <div class="field" style="flex: 1; min-width: 180px">
+              <label for="charge-deadline">Payment deadline (optional)</label>
+              <input type="datetime-local" id="charge-deadline" name="deadline_at" />
+              <p class="field-help">Server time zone. Paying exactly at the deadline is still on time.</p>
+              <div class="field-error"></div>
+            </div>
+            <div class="field" style="flex: 1; min-width: 180px">
+              <label for="charge-fine">Late fine (₦, optional)</label>
+              <input type="text" inputmode="decimal" id="charge-fine" name="late_fine_amount" placeholder="0.00" autocomplete="off" />
+              <p class="field-help">One fixed fine added when payment is started after the deadline. Needs a deadline.</p>
+              <div class="field-error"></div>
+            </div>
+          </div>
+          <div class="field">
+            <label><input  type="checkbox" id="charge-required" name="is_required" /> Required charge</label>
+          </div>
+          <p class="field-help is-hidden" id="charge-lock-note"></p>
+          <div class="row" style="gap: var(--sp-3)">
+            <button type="submit" class="btn btn-primary" id="charge-save-btn">Create charge</button>
+            <button type="button" class="btn btn-secondary is-hidden" id="charge-cancel-btn">Cancel editing</button>
+          </div>
+        </form>
+      </section>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Charge</th>
+              <th>Session / scope</th>
+              <th>Amount</th>
+              <th>Deadline / fine</th>
+              <th>Payments</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="charges-table-body"></tbody>
+        </table>
+        <div class="empty-state is-hidden" id="charges-empty">
+          <h3>No charges yet.</h3>
+          <p>Create the first charge above.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/admin.js"></script>
+  <script src="/js/adminMiscCharges.js"></script>
+</body>
+</html>

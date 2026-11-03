@@ -1,0 +1,55 @@
+# Dependencies - reinstalled with `npm install`, never committed.
+# node_modules can be hundreds of megabytes and is machine-specific.
+node_modules/
+package-lock.json.bak
+
+# Secrets. THIS IS THE IMPORTANT LINE.
+# .env holds the database password and the Paystack secret key.
+# Committing it to a public GitHub repository would expose both.
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Runtime / build
+dist/
+build/
+coverage/
+.tmp/
+uploads/
+
+# Editors and operating systems
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Database dumps produced during testing
+database/backup*.sql
+database/*.dump
+
+# Local session cookies and authentication artifacts
+step1_*_cookies.txt
+*_cookies.txt
+
+# Temporary backups
+*.bak
+*.before-*
+*.broken-backup
+_comment_cleanup_backup/
+
+# Local scratch and verification artifacts
+step*_scratch_*
+step*_scratch_*.sql
+findstr
+
+# Local database exports and recovery dumps
+smart_hostel_before_*.sql
+020_live_payment_schema_reconciliation_live.sql

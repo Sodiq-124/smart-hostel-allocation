@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hostel fees —  Smart Hostel Allocation System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body class="app-body">
+
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><i class="fa-solid fa-user-shield"></i>  Smart Hostel</div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-link" href="/admin/applications.html"><i class="fa-solid fa-file-lines"></i> Applications</a>
+      <a class="sidebar-link" href="/admin/rooms.html"><i class="fa-solid fa-door-open"></i> Rooms</a>
+      <a class="sidebar-link" href="/admin/sessions.html"><i class="fa-solid fa-calendar-days"></i> Sessions</a>
+      <a class="sidebar-link" href="/admin/fees.html"><i class="fa-solid fa-naira-sign"></i> Hostel Fees</a>
+      <a class="sidebar-link" href="/admin/misc-charges.html"><i class="fa-solid fa-receipt"></i> Misc. Charges</a>
+      <a class="sidebar-link" href="/admin/renewals.html"><i class="fa-solid fa-rotate"></i> Renewals</a>
+      <a class="sidebar-link" href="/admin/complaints.html"><i class="fa-solid fa-comments"></i> Complaints</a>
+    </nav>
+    <div class="sidebar-foot">
+      <button class="sidebar-logout" data-action="logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="topbar">
+      <div class="row" style="gap: var(--sp-3)">
+        <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        <span class="topbar-title">Hostel fees</span>
+      </div>
+      <div class="topbar-user">
+        <span class="badge is-hidden" id="topbar-session"></span>
+        <span id="topbar-user-name">—</span>
+        <span class="avatar" id="topbar-avatar">—</span>
+      </div>
+    </header>
+
+    <main class="app-content" id="fees-root">
+      <div class="page-header">
+        <h1>Hostel fees by session</h1>
+        <p>Choose an academic session and set the hostel fee for each block. Electricity is included. Changing a fee never alters earlier fees or payments: the old fee is kept as a record and only new payments use the new amount. Closed and archived sessions are read-only.</p>
+      </div>
+
+      <div class="alert" id="fees-alert" role="alert"></div>
+
+      <div class="field" style="max-width: 320px">
+        <label for="fee-session">Session</label>
+        <select id="fee-session"></select>
+      </div>
+      <p class="panel-note" id="fee-session-note"></p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Block</th><th>Current fee</th><th>Payments on this fee</th><th>Set / change fee (NGN)</th></tr></thead>
+          <tbody id="fees-table-body"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/admin.js"></script>
+  <script src="/js/adminFees.js"></script>
+</body>
+</html>

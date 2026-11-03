@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apply for Room —  Smart Hostel Allocation System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/student.css" />
+</head>
+<body class="app-body">
+
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><i class="fa-solid fa-building-shield"></i>  Smart Hostel</div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-link" href="/student/dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+      <a class="sidebar-link" href="/student/profile.html"><i class="fa-solid fa-user"></i> Profile</a>
+      <a class="sidebar-link" href="/student/apply-room.html"><i class="fa-solid fa-door-open"></i> Apply for Room</a>
+      <a class="sidebar-link" href="/student/application.html"><i class="fa-solid fa-file-lines"></i> My Application</a>
+      <a class="sidebar-link" href="/student/complaints.html"><i class="fa-solid fa-triangle-exclamation"></i> Complaints</a>
+      <a class="sidebar-link" href="/student/payment.html"><i class="fa-solid fa-naira-sign"></i> Payment</a>
+      <a class="sidebar-link" href="/student/misc-charges.html"><i class="fa-solid fa-receipt"></i> Other Charges</a>
+      <a class="sidebar-link" href="/student/renewal.html"><i class="fa-solid fa-rotate"></i> Room Renewal</a>
+    </nav>
+    <div class="sidebar-foot">
+      <button class="sidebar-logout" data-action="logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="topbar">
+      <div class="row" style="gap: var(--sp-3)">
+        <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        <span class="topbar-title">Apply for Room</span>
+      </div>
+      <div class="topbar-user">
+        <span id="topbar-user-name">—</span>
+        <span class="avatar" id="topbar-avatar">—</span>
+      </div>
+    </header>
+
+    <main class="app-content" id="apply-room-root">
+      <div class="page-header">
+        <h1>Apply for a hostel room</h1>
+        <p>Choose a room type and, if you like, a preferred block. Room allocation happens after your application is reviewed.</p>
+      </div>
+
+      <div class="alert" id="form-alert" role="alert"></div>
+
+      <div class="panel is-hidden" id="fee-panel" style="max-width: 560px"></div>
+
+      <div id="apply-room-existing" class="is-hidden panel"></div>
+
+      <div class="panel" id="apply-room-form-section" style="max-width: 560px">
+        <form id="apply-room-form" novalidate>
+          <div class="field">
+            <label id="room-type-label">Room type</label>
+            <div class="pill-group" role="radiogroup" aria-labelledby="room-type-label">
+              <label class="pill-option">
+                <input type="radio" name="room_type" value="single" required />
+                <span><i class="fa-solid fa-door-closed"></i> Single</span>
+              </label>
+              <label class="pill-option">
+                <input type="radio" name="room_type" value="shared" />
+                <span><i class="fa-solid fa-people-roof"></i> Shared</span>
+              </label>
+            </div>
+            <div class="field-error"></div>
+          </div>
+
+          <div class="field">
+            <label for="preferred_block_id">Preferred block </label>
+            <select id="preferred_block_id" name="preferred_block_id">
+              <option value="">No preference</option>
+            </select>
+            <div class="field-error"></div>
+          </div>
+
+          <div class="availability-hint" id="availability-hint">
+            Choose a room type to see current availability.
+          </div>
+
+          <div class="field">
+            <label for="special_request">Special request <span style="font-weight: 400; color: var(--ink-muted)">(optional)</span></label>
+            <textarea id="special_request" name="special_request" maxlength="500"
+              placeholder="e.g. I would prefer a lower-floor room if available."></textarea>
+            <div class="field-error"></div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">Submit application</button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/student.js"></script>
+  <script src="/js/application.js"></script>
+  <script src="/js/sessionFees.js"></script>
+</body>
+</html>

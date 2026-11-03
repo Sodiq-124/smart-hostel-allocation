@@ -1,0 +1,725 @@
+/* =====================================================================
+   global.css
+   LASU Smart Hostel Allocation System - shared foundation
+   ---------------------------------------------------------------------
+   Loaded by EVERY page. It defines the design tokens (the colours,
+   sizes and spacing values the whole system uses) plus the components
+   that appear on more than one page: buttons, form fields, tables,
+   status badges, alerts.
+
+   auth.css, student.css and admin.css are loaded AFTER this file and
+   only add what is specific to their area. Nothing is redefined.
+
+   DESIGN DIRECTION
+   ----------------------------------------------------
+   Typography moved from Public Sans to Manrope - a geometric sans with
+   a fuller weight range (300-800) and more visual character, while
+   staying legible at the small sizes this app relies on for tables and
+   form labels. One family, several weights - never a second typeface.
+
+   The colour system now has three roles instead of one:
+
+     BRAND (blue)     - buttons, links, the sidebar, anything that
+                         represents "this system" rather than "this
+                         status". Unchanged from the earlier LASU
+                         rebrand.
+     SECONDARY (gold)  - a warm accent used sparingly for visual
+                         variety (alternating dashboard icons, the
+                         landing page) - it never carries a status
+                         meaning, so it's safe to use decoratively.
+     ACCENT (teal)     - a second decorative accent, used even more
+                         sparingly, for the same reason as secondary.
+
+   Status colour remains its OWN separate system, untouched by any of
+   the above - green/brass/red/neutral still mean exactly what they
+   meant before this redesign:
+
+        green  = vacant / approved / paid / resolved  (good, settled)
+        brass  = partly occupied / pending / open      (in progress)
+        red    = full / rejected / failed              (blocked)
+
+   Decorative colour and status colour must never be allowed to blur
+   into each other - that separation is why a rebrand or a redesign
+   pass like this one never has to touch a single badge class.
+   ===================================================================== */
+
+/* Manrope: a modern geometric sans-serif with a full weight range,
+   used everywhere - headings, navigation, buttons, labels, body text,
+   tables. Numerals are close to uniform width, which keeps money and
+   room-number columns reasonably aligned even without a dedicated
+   tabular-figure OpenType feature. */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
+
+/* ---------------------------------------------------------------------
+   1. DESIGN TOKENS
+   Every colour and size used in the project is named here once. To
+   restyle the whole system - say, to a different institution's colours -
+   change the --brand values in this block only; nothing else needs to
+   change, because every component below reads from these tokens rather
+   than hard-coding a colour of its own.
+   --------------------------------------------------------------------- */
+:root {
+  /* Surfaces */
+  --paper:            #F1F4F8;   /* page background - cool off-white */
+  --surface:          #FFFFFF;   /* panels, cards, table backgrounds */
+  --surface-sunken:   #E9EEF5;   /* table headers, disabled fields */
+
+  /* Ink */
+  --ink:              #10192A;   /* primary text - blue-black, not grey-black */
+  --ink-muted:        #57657A;   /* secondary text, labels, help text */
+  --ink-faint:        #8996A8;   /* placeholders, disabled text */
+  --ink-inverse:      #F3F6FA;   /* text on dark backgrounds */
+
+  /* Lines */
+  --line:             #D6DEE9;   /* standard border */
+  --line-strong:      #B3C0D4;   /* emphasised border, focused field */
+
+  /* Brand / primary - LASU institutional blue. Used for buttons, links,
+     the sidebar, and anything that represents "this system" rather than
+     "this status". */
+  --brand:            #1B4C96;
+  --brand-dark:       #123667;
+  --brand-light:      #3E72BE;
+  --brand-tint:       #E4ECF7;
+
+  /* Status: good / settled - independent of brand colour */
+  --status-good:       #2F6B4F;
+  --status-good-dark:  #234F3B;
+  --status-good-tint:  #E2EDE7;
+  --status-good-border:#BBD4C6;
+
+  /* Status: in progress - brass key tag */
+  --brass:            #9A6B0C;
+  --brass-tint:       #F6ECD5;
+
+  /* Status: blocked / negative - signal red */
+  --signal:           #A6291F;
+  --signal-tint:      #F8E4E1;
+
+  /* Status: neutral / nothing has happened yet */
+  --neutral:          #57657A;
+  --neutral-tint:     #E8ECF2;
+
+  /* Secondary - warm gold, institutional pairing with the brand blue.
+     Decorative only: never used to signal a status, so it's safe to
+     apply anywhere for visual variety without teaching anyone a new
+     meaning. */
+  --secondary:        #C9922B;
+  --secondary-dark:   #9C7318;
+  --secondary-tint:   #FBF1DE;
+
+  /* Accent - a second decorative colour, used more sparingly than
+     secondary. Same rule: decorative only, never a status. */
+  --accent:           #0E7C86;
+  --accent-dark:      #0A5F67;
+  --accent-tint:      #E0F2F3;
+
+  /* Typography */
+  --font-ui: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+             Roboto, Helvetica, Arial, sans-serif;
+
+  --fs-xs:    0.75rem;    /* 12px - badges, table meta */
+  --fs-sm:    0.8125rem;  /* 13px - help text, labels */
+  --fs-base:  0.9375rem;  /* 15px - body, form fields */
+  --fs-md:    1.0625rem;  /* 17px - card titles */
+  --fs-lg:    1.375rem;   /* 22px - section headings */
+  --fs-xl:    1.75rem;    /* 28px - page titles */
+  --fs-2xl:   2.375rem;   /* 38px - statistic numbers, hero */
+
+  --lh-tight: 1.2;
+  --lh-body:  1.55;
+
+  /* Spacing - a 4px scale. Using these instead of arbitrary pixel
+     values is what makes the interface feel consistent. */
+  --sp-1: 0.25rem;   /*  4px */
+  --sp-2: 0.5rem;    /*  8px */
+  --sp-3: 0.75rem;   /* 12px */
+  --sp-4: 1rem;      /* 16px */
+  --sp-5: 1.5rem;    /* 24px */
+  --sp-6: 2rem;      /* 32px */
+  --sp-7: 3rem;      /* 48px */
+  --sp-8: 4rem;      /* 64px */
+
+  /* Radius hierarchy - different shapes for different roles, rather
+     than one radius on everything. */
+  --r-field: 4px;    /* inputs, buttons - small, functional */
+  --r-panel: 10px;   /* cards, panels - containers */
+  --r-pill:  999px;  /* badges */
+
+  /* Elevation - overlays only */
+  --shadow-overlay: 0 12px 32px rgba(16, 25, 42, 0.18);
+
+  /* Layout */
+  --sidebar-w: 248px;
+  --topbar-h: 60px;
+  --content-max: 1180px;
+
+  --transition: 140ms ease;
+}
+
+/* ---------------------------------------------------------------------
+   2. RESET AND BASE
+   --------------------------------------------------------------------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--fs-base);
+  line-height: var(--lh-body);
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  margin: 0 0 var(--sp-3);
+  line-height: var(--lh-tight);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+h1 { font-size: var(--fs-xl); }
+h2 { font-size: var(--fs-lg); }
+h3 { font-size: var(--fs-md); font-weight: 600; }
+
+p { margin: 0 0 var(--sp-4); max-width: 68ch; }
+
+a {
+  color: var(--brand-dark);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+a:hover { color: var(--brand); }
+
+img { max-width: 100%; height: auto; display: block; }
+
+/* Room numbers, amounts and counts must line up vertically in columns.
+   Tabular figures make every digit the same width. */
+.num,
+td.num,
+.stat-value,
+.money { font-variant-numeric: tabular-nums; }
+
+/* Keyboard users must always be able to see where they are. */
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Respect the operating system's reduced-motion setting. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Visible only to screen readers. Used for form labels that are
+   implied visually but still need to be announced. */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------------------------------------------------------------------
+   3. LAYOUT HELPERS
+   --------------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--sp-5);
+}
+
+.stack > * + * { margin-top: var(--sp-4); }
+
+.row {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: center;
+  flex-wrap: wrap;
+}
+.row-between { justify-content: space-between; }
+
+.grid { display: grid; gap: var(--sp-4); }
+.grid-2 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.grid-4 { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+
+/* ---------------------------------------------------------------------
+   4. PANELS
+   --------------------------------------------------------------------- */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-panel);
+  padding: var(--sp-5);
+}
+
+.panel-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--line);
+}
+.panel-header h2,
+.panel-header h3 { margin: 0; }
+
+.panel-note {
+  font-size: var(--fs-sm);
+  color: var(--ink-muted);
+}
+
+/* ---------------------------------------------------------------------
+   5. BUTTONS
+   Button text says what will happen: "Submit application", not "Submit".
+   --------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: 0.6rem var(--sp-4);
+  min-height: 40px;
+  font-family: inherit;
+  font-size: var(--fs-base);
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: var(--r-field);
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.btn:disabled,
+.btn[aria-disabled='true'] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--brand);
+  color: #fff;
+  border-color: var(--brand);
+}
+.btn-primary:hover:not(:disabled) { background: var(--brand-dark); border-color: var(--brand-dark); }
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+.btn-secondary:hover:not(:disabled) { background: var(--surface-sunken); }
+
+.btn-danger {
+  background: var(--signal);
+  color: #fff;
+  border-color: var(--signal);
+}
+.btn-danger:hover:not(:disabled) { background: #8A1F17; border-color: #8A1F17; }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--brand-dark);
+  border-color: transparent;
+  padding-inline: var(--sp-2);
+}
+.btn-ghost:hover:not(:disabled) { background: var(--brand-tint); }
+
+.btn-sm { min-height: 32px; padding: 0.35rem var(--sp-3); font-size: var(--fs-sm); }
+.btn-block { width: 100%; }
+
+/* A button that is waiting on the server. Set by js/ui.js. */
+.btn.is-loading { pointer-events: none; opacity: 0.7; }
+
+/* ---------------------------------------------------------------------
+   6. FORMS
+   --------------------------------------------------------------------- */
+.field { margin-bottom: var(--sp-4); }
+
+.field label {
+  display: block;
+  margin-bottom: var(--sp-2);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 0.6rem var(--sp-3);
+  min-height: 42px;
+  font-family: inherit;
+  font-size: var(--fs-base);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-field);
+  transition: border-color var(--transition);
+}
+
+/* Every <select> in the project goes through this one rule - the
+   browser's own dropdown arrow is replaced with a custom chevron drawn
+   as an inline SVG, so no image asset or icon font glyph is needed.
+   appearance: none strips the native styling (which varies wildly
+   between operating systems) so the chevron and padding are
+   predictable everywhere. */
+.field select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%2357657A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='5 8 10 13 15 8'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px;
+  padding-right: 2.25rem;
+}
+
+.field textarea { min-height: 110px; resize: vertical; line-height: var(--lh-body); }
+
+.field input::placeholder,
+.field textarea::placeholder { color: var(--ink-faint); }
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--brand);
+  outline: 2px solid var(--brand-tint);
+  outline-offset: 0;
+}
+
+.field input:disabled,
+.field select:disabled {
+  background: var(--surface-sunken);
+  color: var(--ink-muted);
+  cursor: not-allowed;
+}
+
+.field-help {
+  margin-top: var(--sp-2);
+  font-size: var(--fs-sm);
+  color: var(--ink-muted);
+}
+
+/* Validation state, applied by JavaScript after the server replies. */
+.field.has-error input,
+.field.has-error select,
+.field.has-error textarea { border-color: var(--signal); }
+
+.field-error {
+  display: none;
+  margin-top: var(--sp-2);
+  font-size: var(--fs-sm);
+  color: var(--signal);
+}
+.field.has-error .field-error { display: block; }
+
+/* ---------------------------------------------------------------------
+   7a. PILL SELECTOR
+   A small set of mutually-exclusive choices (gender, room type) shown
+   as selectable cards instead of a native <select> or radio dots.
+   Built on REAL <input type="radio"> elements, visually hidden rather
+   than removed, so keyboard navigation, screen readers and form
+   submission all work exactly as a normal radio group would - this is
+   restyling, not a replacement control.
+
+   Markup:
+     <div class="pill-group">
+       <label class="pill-option">
+         <input type="radio" name="gender" value="male" />
+         <span><i class="fa-solid fa-mars"></i> Male</span>
+       </label>
+       ...
+     </div>
+   --------------------------------------------------------------------- */
+.pill-group {
+  display: flex;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+}
+
+.pill-option {
+  position: relative;
+  cursor: pointer;
+}
+
+/* Hidden visually, not with display:none - a screen reader and the
+   keyboard still see a normal radio input. */
+.pill-option input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+}
+
+.pill-option span {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 0.65rem var(--sp-4);
+  min-height: 42px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--r-field);
+  background: var(--surface);
+  color: var(--ink-muted);
+  font-weight: 600;
+  font-size: var(--fs-base);
+  transition: border-color var(--transition), background var(--transition), color var(--transition);
+}
+
+.pill-option span i { font-size: 0.95em; }
+
+.pill-option:hover span { border-color: var(--brand); color: var(--ink); }
+
+/* Selected state is carried by BOTH colour and a border-weight/
+   background change, plus a checkmark - never colour alone. */
+.pill-option input:checked + span {
+  border-color: var(--brand);
+  background: var(--brand-tint);
+  color: var(--brand-dark);
+}
+.pill-option input:checked + span::after {
+  content: '\f00c'; /* Font Awesome check */
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 0.8em;
+  margin-left: var(--sp-1);
+}
+
+.pill-option input:focus-visible + span {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------
+   7b. RESPONSIVE FIELD PAIR
+   Two fields side by side (Department/Level, Capacity/Status, and
+   similar short pairings) that stack on a real phone but stay paired
+   down to a much narrower width than the page as a whole needs to
+   collapse - short fields don't need a full-width row to stay usable.
+   --------------------------------------------------------------------- */
+.grid-2-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-4);
+}
+@media (max-width: 600px) {
+  .grid-2-fields { grid-template-columns: 1fr; }
+}
+
+/* ---------------------------------------------------------------------
+   7c. GLASS CARD
+   The frosted surface used on the redesigned landing and auth pages -
+   see css/auth.css and frontend/index.html. Defined once here since
+   both consumers need the identical recipe.
+
+   Falls back to a solid, near-opaque surface for the small number of
+   browsers without backdrop-filter support, via @supports - the card
+   must stay fully readable even without the blur.
+   --------------------------------------------------------------------- */
+.glass-card {
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: var(--r-panel);
+  box-shadow: var(--shadow-overlay);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-card { background: rgba(16, 25, 42, 0.82); }
+}
+
+/* A solid (non-frosted) card used for the actual form on glass pages -
+   deliberately more opaque than .glass-card so form text and inputs
+   stay crisp; only the card's OWN edge sits on the blurred glass. */
+.glass-form-card {
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: var(--r-panel);
+  box-shadow: var(--shadow-overlay);
+}
+
+/* ---------------------------------------------------------------------
+   7. STATUS BADGES
+   The colour code described at the top of this file.
+   --------------------------------------------------------------------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: 0.2rem var(--sp-3);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  border-radius: var(--r-pill);
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+/* Settled and positive - always green, regardless of brand colour */
+.badge-approved,
+.badge-allocated,
+.badge-paid,
+.badge-vacant,
+.badge-success,
+.badge-resolved {
+  background: var(--status-good-tint);
+  color: var(--status-good-dark);
+  border-color: var(--status-good-border);
+}
+
+/* In progress */
+.badge-pending,
+.badge-awaiting_allocation,
+.badge-partial,
+.badge-processing,
+.badge-open,
+.badge-in_progress {
+  background: var(--brass-tint);
+  color: var(--brass);
+  border-color: #E3CE9C;
+}
+
+/* Blocked / needs attention - includes badge-revoked (same visual
+   treatment as rejected/failed: something was undone and needs a new
+   action from the student or admin) */
+.badge-rejected,
+.badge-revoked,
+.badge-failed,
+.badge-full {
+  background: var(--signal-tint);
+  color: var(--signal);
+  border-color: #E8BEB8;
+}
+
+/* Nothing has happened yet, or the student withdrew it themselves */
+.badge-none,
+.badge-unpaid,
+.badge-cancelled,
+.badge-neutral {
+  background: var(--neutral-tint);
+  color: var(--neutral);
+  border-color: var(--line);
+}
+
+/* ---------------------------------------------------------------------
+   8. TABLES
+   Wrap every table in <div class="table-wrap"> so it can scroll
+   sideways on a phone instead of breaking the layout.
+   --------------------------------------------------------------------- */
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--r-panel);
+  background: var(--surface);
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-base);
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  text-align: left;
+  padding: var(--sp-3) var(--sp-4);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink-muted);
+  background: var(--surface-sunken);
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+tbody td {
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: var(--paper); }
+
+.table-actions { display: flex; gap: var(--sp-2); flex-wrap: nowrap; }
+
+/* Applied to specific <td>/<th> cells (status badges, action buttons,
+   dates) that look worse wrapped onto two lines than they do simply
+   letting the table scroll horizontally inside .table-wrap. Content
+   columns like a subject or description are deliberately NOT given
+   this class, so they still wrap normally. */
+.nowrap { white-space: nowrap; }
+
+/* Shown in place of rows when a query returns nothing. An empty state
+   tells the user what to do next rather than just saying "No data". */
+.empty-state {
+  padding: var(--sp-7) var(--sp-5);
+  text-align: center;
+  color: var(--ink-muted);
+}
+.empty-state h3 { color: var(--ink); }
+
+/* ---------------------------------------------------------------------
+   9. ALERTS
+   --------------------------------------------------------------------- */
+.alert {
+  padding: var(--sp-3) var(--sp-4);
+  border: 1px solid transparent;
+  border-left-width: 3px;
+  border-radius: var(--r-field);
+  font-size: var(--fs-base);
+  margin-bottom: var(--sp-4);
+}
+.alert:empty { display: none; }
+
+.alert-success { background: var(--status-good-tint); color: var(--status-good-dark); border-color: var(--status-good); }
+.alert-warning { background: var(--brass-tint);  color: var(--brass);      border-color: var(--brass); }
+.alert-error   { background: var(--signal-tint); color: var(--signal);     border-color: var(--signal); }
+.alert-info    { background: var(--neutral-tint);color: var(--ink);        border-color: var(--neutral); }
+
+/* ---------------------------------------------------------------------
+   10. LOADING
+   --------------------------------------------------------------------- */
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 700ms linear infinite;
+  display: inline-block;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.is-hidden { display: none !important; }
+
+/* ---------------------------------------------------------------------
+   11. PRINT
+   Used by the payment receipt. Everything marked .no-print disappears.
+   --------------------------------------------------------------------- */
+@media print {
+  body { background: #fff; }
+  .no-print, .sidebar, .topbar, .btn { display: none !important; }
+  .panel { border: none; padding: 0; }
+}

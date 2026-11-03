@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile — LASU Smart Hostel Allocation System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/student.css" />
+</head>
+<body class="app-body">
+
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><i class="fa-solid fa-building-shield"></i> Smart Hostel</div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-link" href="/student/dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+      <a class="sidebar-link" href="/student/profile.html"><i class="fa-solid fa-user"></i> Profile</a>
+      <a class="sidebar-link" href="/student/apply-room.html"><i class="fa-solid fa-door-open"></i> Apply for Room</a>
+      <a class="sidebar-link" href="/student/application.html"><i class="fa-solid fa-file-lines"></i> My Application</a>
+      <a class="sidebar-link" href="/student/complaints.html"><i class="fa-solid fa-triangle-exclamation"></i> Complaints</a>
+      <a class="sidebar-link" href="/student/payment.html"><i class="fa-solid fa-naira-sign"></i> Payment</a>
+      <a class="sidebar-link" href="/student/misc-charges.html"><i class="fa-solid fa-receipt"></i> Other Charges</a>
+      <a class="sidebar-link" href="/student/renewal.html"><i class="fa-solid fa-rotate"></i> Room Renewal</a>
+    </nav>
+    <div class="sidebar-foot">
+      <button class="sidebar-logout" data-action="logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="topbar">
+      <div class="row" style="gap: var(--sp-3)">
+        <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        <span class="topbar-title">Profile</span>
+      </div>
+      <div class="topbar-user">
+        <span id="topbar-user-name">—</span>
+        <span class="avatar" id="topbar-avatar">—</span>
+      </div>
+    </header>
+
+    <main class="app-content">
+      <div class="page-header">
+        <h1>Your profile</h1>
+        <p>Update your details below. Some changes have restrictions explained next to the field.</p>
+      </div>
+
+      <div class="grid grid-2" style="align-items: start">
+
+        <div class="panel">
+          <div class="panel-header"><h3>Account</h3></div>
+          <div class="info-row">
+            <span class="info-row-label">Registered on</span>
+            <span class="info-row-value" id="ro-since">—</span>
+          </div>
+          <p class="panel-note" style="margin-top: var(--sp-4)">
+            Student ID and gender can be edited on the right, within the
+            limits explained there. Everything else about your account
+            history - applications, allocations, complaints - stays
+            attached to your account regardless of these changes.
+          </p>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header"><h3>Profile details</h3></div>
+          <div class="alert" id="form-alert" role="alert"></div>
+
+          <form id="profile-form" novalidate>
+            <div class="field">
+              <label for="full_name">Full name</label>
+              <input type="text" id="full_name" name="full_name" required />
+              <div class="field-error"></div>
+            </div>
+
+            <div class="field">
+              <label for="email">Email address</label>
+              <input type="email" id="email" name="email" required />
+              <div class="field-error"></div>
+            </div>
+
+            <div class="auth-row-2" style="display:grid; grid-template-columns:1fr 1fr; gap: var(--sp-4)">
+              <div class="field">
+                <label for="student_id">Student ID</label>
+                <input type="text" id="student_id" name="student_id" inputmode="numeric" pattern="[0-9]{6,15}" />
+                <p class="field-help">Must be unique - 6 to 15 digits.</p>
+                <div class="field-error"></div>
+              </div>
+              <div class="field">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender">
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+                <p class="field-help">Locked once you have an approved application.</p>
+                <div class="field-error"></div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="phone">Phone number</label>
+              <input type="tel" id="phone" name="phone" placeholder="Optional" />
+              <div class="field-error"></div>
+            </div>
+
+            <div class="auth-row-2" style="display:grid; grid-template-columns:1fr 1fr; gap: var(--sp-4)">
+              <div class="field">
+                <label for="department">Department</label>
+                <input type="text" id="department" name="department" placeholder="Optional" />
+                <div class="field-error"></div>
+              </div>
+              <div class="field">
+                <label for="level">Level</label>
+                <input type="text" id="level" name="level" placeholder="e.g. 200" />
+                <div class="field-error"></div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </form>
+        </div>
+
+      </div>
+
+      <div class="panel" style="margin-top: var(--sp-5); border-color: var(--signal-tint)">
+        <div class="panel-header"><h3 style="color: var(--signal)">Danger zone</h3></div>
+        <p>Deactivating your account signs you out immediately and prevents you from logging back in. Your application, allocation and complaint history is kept, not deleted.</p>
+
+        <div class="alert" id="deactivate-alert" role="alert"></div>
+
+        <form id="deactivate-form" novalidate style="max-width: 360px">
+          <div class="field field-password">
+            <label for="deactivate-password">Confirm your password</label>
+            <input type="password" id="deactivate-password" name="password" autocomplete="current-password" required />
+            <div class="field-error"></div>
+          </div>
+          <button type="submit" class="btn btn-danger">Deactivate my account</button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/student.js"></script>
+</body>
+</html>

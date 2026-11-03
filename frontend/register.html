@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register — Smart Hostel Allocation System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/auth.css" />
+</head>
+<body class="auth-body">
+  <div class="auth-shell">
+
+    <aside class="auth-identity">
+      <span class="auth-mark glass-card"><i class="fa-solid fa-building-shield"></i>  Smart Hostel</span>
+      <div>
+        <h1>Create your student account.</h1>
+        <p>Register once to apply for hostel accommodation, track your application, and pay your hostel fee online.</p>
+      </div>
+      <div class="auth-identity-footer glass-card">Student &amp; staff portal</div>
+    </aside>
+
+    <section class="auth-form-panel">
+      <div class="auth-form-card glass-form-card">
+        <a class="auth-back" href="/index.html"><i class="fa-solid fa-arrow-left"></i> Back to home</a>
+
+        <h2>Register</h2>
+        <p class="auth-sub">Use your official university email and student ID.</p>
+
+        <div class="alert" id="form-alert" role="alert"></div>
+
+        <form id="register-form" novalidate>
+          <div class="field">
+            <label for="full_name">Full name</label>
+            <input type="text" id="full_name" name="full_name" autocomplete="name" required />
+            <div class="field-error"></div>
+          </div>
+
+          <div class="field">
+            <label for="student_id">Student ID</label>
+            <input type="text" id="student_id" name="student_id" placeholder="e.g. 230591052"
+                   inputmode="numeric" pattern="[0-9]{6,15}" required />
+            <div class="field-error"></div>
+          </div>
+
+          <div class="field">
+            <label id="gender-label">Gender</label>
+            <div class="pill-group" role="radiogroup" aria-labelledby="gender-label">
+              <label class="pill-option">
+                <input type="radio" name="gender" value="male" required />
+                <span><i class="fa-solid fa-mars"></i> Male</span>
+              </label>
+              <label class="pill-option">
+                <input type="radio" name="gender" value="female" />
+                <span><i class="fa-solid fa-venus"></i> Female</span>
+              </label>
+            </div>
+            <p class="field-help">Determines which hostel blocks you can apply to, since the hostel operates separate male and female blocks.</p>
+            <div class="field-error"></div>
+          </div>
+
+          <div class="field">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" autocomplete="email" required />
+            <div class="field-error"></div>
+          </div>
+
+          <div class="grid-2-fields">
+            <div class="field field-password">
+              <label for="password">Password</label>
+              <input type="password" id="password" name="password" autocomplete="new-password" minlength="8" required />
+              <button type="button" class="field-password-toggle" id="toggle-password" aria-label="Show password">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+              <div class="field-error"></div>
+            </div>
+
+            <div class="field field-password">
+              <label for="confirm_password">Confirm password</label>
+              <input type="password" id="confirm_password" name="confirm_password" autocomplete="new-password" minlength="8" required />
+              <div class="field-error"></div>
+            </div>
+          </div>
+          <p class="field-help" style="margin-top:-0.75rem">
+            At least 8 characters, with at least one letter and one number.
+          </p>
+
+          <button type="submit" class="btn btn-primary btn-block" style="margin-top: var(--sp-4)">Create account</button>
+        </form>
+
+        <p class="auth-footer-link">
+          Already have an account? <a href="/login.html">Log in</a>
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    initPasswordToggle(document.getElementById('toggle-password'), document.getElementById('password'));
+  </script>
+</body>
+</html>

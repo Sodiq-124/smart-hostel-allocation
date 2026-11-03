@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log in — Smart Hostel Allocation System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/auth.css" />
+</head>
+<body class="auth-body">
+  <div class="auth-shell">
+
+    <aside class="auth-identity">
+      <span class="auth-mark glass-card"><i class="fa-solid fa-building-shield"></i> Smart Hostel</span>
+      <div>
+        <h1>Welcome back.</h1>
+        <p>Sign in to check your application status, view your allocated room, or complete your hostel payment.</p>
+      </div>
+      <div class="auth-identity-footer glass-card">Student &amp; staff portal</div>
+    </aside>
+
+    <section class="auth-form-panel">
+      <div class="auth-form-card glass-form-card">
+        <a class="auth-back" href="/index.html"><i class="fa-solid fa-arrow-left"></i> Back to home</a>
+
+        <h2>Log in to your account</h2>
+        <p class="auth-sub">Enter the email and password you registered with.</p>
+
+        <div class="alert" id="form-alert" role="alert"></div>
+
+        <form id="login-form" novalidate>
+          <div class="field">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" autocomplete="email" required />
+            <div class="field-error"></div>
+          </div>
+
+          <div class="field field-password">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" autocomplete="current-password" required />
+            <button type="button" class="field-password-toggle" id="toggle-password" aria-label="Show password">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+            <div class="field-error"></div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">Log in</button>
+        </form>
+
+        <p class="auth-footer-link">
+          Don't have an account? <a href="/register.html">Register here</a>
+        </p>
+        <p class="auth-footer-link">
+          <a href="/admin/login.html">Administrator login</a>
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/auth.js"></script>
+</body>
+</html>

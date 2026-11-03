@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Applications — Smart Hostel Allocation System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body class="app-body">
+
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><i class="fa-solid fa-user-shield"></i> Smart Hostel</div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-link" href="/admin/applications.html"><i class="fa-solid fa-file-lines"></i> Applications</a>
+      <a class="sidebar-link" href="/admin/rooms.html"><i class="fa-solid fa-door-open"></i> Rooms</a>
+      <a class="sidebar-link" href="/admin/sessions.html"><i class="fa-solid fa-calendar-days"></i> Sessions</a>
+      <a class="sidebar-link" href="/admin/fees.html"><i class="fa-solid fa-naira-sign"></i> Hostel Fees</a>
+      <a class="sidebar-link" href="/admin/misc-charges.html"><i class="fa-solid fa-receipt"></i> Misc. Charges</a>
+      <a class="sidebar-link" href="/admin/renewals.html"><i class="fa-solid fa-rotate"></i> Renewals</a>
+      <a class="sidebar-link" href="/admin/complaints.html"><i class="fa-solid fa-comments"></i> Complaints</a>
+    </nav>
+    <div class="sidebar-foot">
+      <button class="sidebar-logout" data-action="logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="topbar">
+      <div class="row" style="gap: var(--sp-3)">
+        <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        <span class="topbar-title">Applications</span>
+      </div>
+      <div class="topbar-user">
+        <span class="badge is-hidden" id="topbar-session"></span>
+        <span id="topbar-user-name">—</span>
+        <span class="avatar" id="topbar-avatar">—</span>
+      </div>
+    </header>
+
+    <main class="app-content" id="applications-root">
+      <div class="page-header">
+        <h1>Hostel applications</h1>
+        <p>Read-only view of every student application. Approval and rejection are handled in a later phase.</p>
+      </div>
+
+      <div class="alert" id="applications-error" role="alert"></div>
+
+      <section id="applications-list-section">
+        <form class="filter-bar panel" id="applications-filter-form">
+          <div class="field">
+            <label for="filter-status">Status</label>
+            <select id="filter-status" name="status">
+              <option value="">All statuses</option>
+              <option value="pending">Pending</option>
+              <option value="approved">Approved</option>
+              <option value="rejected">Rejected</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="filter-payment">Hostel-fee payment</label>
+            <select id="filter-payment" name="payment_status">
+              <option value="">Any payment status</option>
+              <option value="paid">Paid (verified)</option>
+              <option value="pending">Payment pending</option>
+              <option value="unpaid">Not paid</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="filter-room-type">Room type</label>
+            <select id="filter-room-type" name="room_type">
+              <option value="">All types</option>
+              <option value="single">Single</option>
+              <option value="shared">Shared</option>
+            </select>
+          </div>
+
+          <div class="field" style="flex: 1; min-width: 220px">
+            <label for="filter-q">Search student</label>
+            <input type="text" id="filter-q" name="q" placeholder="Name or email" />
+          </div>
+
+          <button type="submit" class="btn btn-primary">Filter</button>
+          <button type="reset" class="btn btn-secondary">Clear</button>
+        </form>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Student</th>
+                <th>Email</th>
+                <th>Room Type</th>
+                <th>Preferred Block</th>
+                <th>Status</th>
+                <th>Payment</th>
+                <th>Applied At</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="applications-table-body"></tbody>
+          </table>
+
+          <div class="empty-state is-hidden" id="applications-empty">
+            <h3>No hostel applications found.</h3>
+            <p>No applications match the current filters, or none have been submitted yet.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="applications-detail-section" class="is-hidden"></section>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

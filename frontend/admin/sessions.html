@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sessions —  Smart Hostel Allocation System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body class="app-body">
+
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><i class="fa-solid fa-user-shield"></i>  Smart Hostel</div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-link" href="/admin/applications.html"><i class="fa-solid fa-file-lines"></i> Applications</a>
+      <a class="sidebar-link" href="/admin/rooms.html"><i class="fa-solid fa-door-open"></i> Rooms</a>
+      <a class="sidebar-link" href="/admin/sessions.html"><i class="fa-solid fa-calendar-days"></i> Sessions</a>
+      <a class="sidebar-link" href="/admin/fees.html"><i class="fa-solid fa-naira-sign"></i> Hostel Fees</a>
+      <a class="sidebar-link" href="/admin/misc-charges.html"><i class="fa-solid fa-receipt"></i> Misc. Charges</a>
+      <a class="sidebar-link" href="/admin/renewals.html"><i class="fa-solid fa-rotate"></i> Renewals</a>
+      <a class="sidebar-link" href="/admin/complaints.html"><i class="fa-solid fa-comments"></i> Complaints</a>
+    </nav>
+    <div class="sidebar-foot">
+      <button class="sidebar-logout" data-action="logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="topbar">
+      <div class="row" style="gap: var(--sp-3)">
+        <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        <span class="topbar-title">Sessions</span>
+      </div>
+      <div class="topbar-user">
+        <span class="badge is-hidden" id="topbar-session"></span>
+        <span id="topbar-user-name">—</span>
+        <span class="avatar" id="topbar-avatar">—</span>
+      </div>
+    </header>
+
+    <main class="app-content" id="sessions-root">
+      <div class="page-header">
+        <h1>Hostel sessions</h1>
+        <p>Only one session can be open at a time. Sessions move forward only: upcoming, open, closed. Closing a session does not change any application, allocation or payment.</p>
+      </div>
+
+      <div class="alert" id="sessions-alert" role="alert"></div>
+
+      <section class="panel" id="current-session-panel" style="margin-bottom: var(--sp-5)">
+        <div class="panel-header"><h3>Current session</h3></div>
+        <div id="current-session-body"><span class="spinner"></span> Loading…</div>
+      </section>
+
+      <section class="panel" style="margin-bottom: var(--sp-5); max-width: 640px">
+        <div class="panel-header"><h3>Create an upcoming session</h3></div>
+        <form id="create-session-form" novalidate>
+          <div class="field">
+            <label for="session-label">Session label</label>
+            <input type="text" id="session-label" name="label" placeholder="2027/2028" maxlength="9" autocomplete="off" />
+            <p class="field-help">Two consecutive years, later than the latest existing session.</p>
+            <div class="field-error"></div>
+          </div>
+          <div class="row" style="gap: var(--sp-4); flex-wrap: wrap">
+            <div class="field" style="flex: 1; min-width: 180px">
+              <label for="session-starts">Start date (optional)</label>
+              <input type="date" id="session-starts" name="starts_on" />
+              <div class="field-error"></div>
+            </div>
+            <div class="field" style="flex: 1; min-width: 180px">
+              <label for="session-ends">End date (optional)</label>
+              <input type="date" id="session-ends" name="ends_on" />
+              <div class="field-error"></div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" id="create-session-btn">Create session</button>
+        </form>
+      </section>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Session</th>
+              <th>Status</th>
+              <th>Dates</th>
+              <th>Applications</th>
+              <th>Active allocations</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="sessions-table-body"></tbody>
+        </table>
+
+        <div class="empty-state is-hidden" id="sessions-empty">
+          <h3>No sessions yet.</h3>
+          <p>Create the first session above.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/admin.js"></script>
+  <script src="/js/adminSessions.js"></script>
+</body>
+</html>

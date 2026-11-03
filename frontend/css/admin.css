@@ -1,0 +1,187 @@
+
+
+body.app-body {
+  background: var(--paper);
+  min-height: 100vh;
+}
+
+
+.sidebar {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: var(--sidebar-w);
+  background: #10182A;
+  color: var(--ink-inverse);
+  display: flex;
+  flex-direction: column;
+  z-index: 40;
+  transition: transform var(--transition);
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-5) var(--sp-5) var(--sp-4);
+  font-weight: 700;
+  font-size: var(--fs-base);
+  color: #fff;
+  border-bottom: 1px solid rgba(243, 246, 250, 0.12);
+}
+.sidebar-brand i { font-size: 1.2em; }
+
+.sidebar-nav {
+  flex: 1;
+  padding: var(--sp-4) var(--sp-3);
+  overflow-y: auto;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: 0.65rem var(--sp-3);
+  margin-bottom: var(--sp-1);
+  border-radius: var(--r-field);
+  color: rgba(243, 246, 250, 0.78);
+  text-decoration: none;
+  font-size: var(--fs-base);
+  font-weight: 500;
+  transition: background var(--transition), color var(--transition);
+}
+.sidebar-link i { width: 1.1em; text-align: center; font-size: 0.95em; }
+
+.sidebar-link:hover { background: rgba(243, 246, 250, 0.08); color: #fff; }
+
+.sidebar-link.is-active {
+  background: var(--surface);
+  color: #10182A;
+  font-weight: 600;
+}
+
+.sidebar-foot {
+  padding: var(--sp-3);
+  border-top: 1px solid rgba(243, 246, 250, 0.12);
+}
+
+.sidebar-logout {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: 0.65rem var(--sp-3);
+  background: none;
+  border: none;
+  color: rgba(243, 246, 250, 0.78);
+  font-family: inherit;
+  font-size: var(--fs-base);
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: var(--r-field);
+  text-align: left;
+}
+.sidebar-logout:hover { background: rgba(243, 246, 250, 0.08); color: #fff; }
+
+.sidebar-backdrop {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(16, 25, 42, 0.4);
+  z-index: 30;
+}
+
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.is-open { transform: translateX(0); }
+  .sidebar-backdrop.is-open { display: block; }
+}
+
+
+.app-main {
+  margin-left: var(--sidebar-w);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 900px) {
+  .app-main { margin-left: 0; }
+}
+
+.topbar {
+  height: var(--topbar-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: 0 var(--sp-5);
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.topbar-title { font-weight: 700; font-size: var(--fs-md); }
+
+.sidebar-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--ink);
+  cursor: pointer;
+  padding: var(--sp-2);
+}
+@media (max-width: 900px) { .sidebar-toggle { display: inline-flex; } }
+
+.topbar-user {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: var(--fs-sm);
+}
+
+.avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--surface-sunken);
+  color: #10182A;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  font-size: var(--fs-sm);
+}
+
+.app-content {
+  flex: 1;
+  padding: var(--sp-6) var(--sp-5);
+  max-width: 1180px;
+  width: 100%;
+}
+
+.page-header { margin-bottom: var(--sp-6); }
+.page-header h1 { margin-bottom: var(--sp-1); }
+.page-header p { color: var(--ink-muted); margin: 0; }
+
+
+.filter-bar {
+  display: flex;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+  align-items: flex-end;
+  margin-bottom: var(--sp-5);
+}
+.filter-bar .field { margin-bottom: 0; min-width: 160px; }
+.filter-bar .field input,
+.filter-bar .field select { min-height: 38px; }
+
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-3) 0;
+  border-bottom: 1px solid var(--line);
+}
+.info-row:last-child { border-bottom: none; }
+.info-row-label { color: var(--ink-muted); font-size: var(--fs-sm); }
+.info-row-value { font-weight: 600; text-align: right; }

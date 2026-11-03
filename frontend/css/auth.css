@@ -1,0 +1,188 @@
+/* =====================================================================
+   auth.css
+   Login, registration and the public landing page.
+   ---------------------------------------------------------------------
+   The campus photo (frontend/images/campus.jpg) fills the whole
+   viewport behind a dark gradient overlay, with the actual form
+   floating on a solid white card and the identity copy sitting
+   directly on the photo.
+
+   Two glass layers are used, each for a different reason (see
+   css/global.css section 7c for both):
+     .glass-card       - a genuinely frosted, semi-transparent surface.
+                          Used here for the small identity "chip" in
+                          the corner - decorative content that can
+                          afford to stay translucent.
+     .glass-form-card   - a mostly OPAQUE white card. Used for the
+                          actual login/register form, because form
+                          text, inputs and error messages must stay
+                          fully legible regardless of what part of the
+                          photo sits behind them - accessibility comes
+                          before the visual effect here.
+
+   The admin variant keeps a near-black overlay (matching the existing
+   "admin area is visually distinct" pattern) instead of
+   the student side's blue overlay - same photo, different tint, so a
+   screenshot alone still tells you which area you're in.
+   ===================================================================== */
+
+body.auth-body {
+  min-height: 100vh;
+  margin: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-5);
+
+  background-image: url('/images/campus.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Dark gradient overlay for contrast - without this, white text over
+   the photo's bright sky and pavement areas would fail basic contrast
+   requirements. Blue-tinted for the student side. */
+body.auth-body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(18, 54, 103, 0.88) 0%, rgba(16, 25, 42, 0.72) 55%, rgba(16, 25, 42, 0.55) 100%);
+  z-index: 0;
+}
+
+/* Admin pages get a near-black overlay instead - added via a class on
+   <body> (body.auth-body.is-admin), not a second stylesheet, since
+   everything else about the layout is identical. */
+body.auth-body.is-admin::before {
+  background: linear-gradient(160deg, rgba(16, 24, 42, 0.90) 0%, rgba(10, 14, 24, 0.80) 55%, rgba(10, 14, 24, 0.62) 100%);
+}
+
+.auth-shell {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 920px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-7);
+  align-items: center;
+}
+
+/* ---------- Identity copy - sits directly on the photo ---------- */
+.auth-identity {
+  color: var(--ink-inverse);
+  padding: var(--sp-4) 0;
+}
+
+.auth-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-4);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.auth-mark i { font-size: 1.1em; color: var(--secondary); }
+
+.auth-identity h1 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1.15;
+  max-width: 15ch;
+  color: #fff;
+  margin-top: var(--sp-5);
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.25);
+}
+
+.auth-identity p {
+  color: rgba(243, 246, 250, 0.88);
+  max-width: 38ch;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+}
+
+.auth-identity-footer {
+  display: inline-block;
+  margin-top: var(--sp-6);
+  padding: var(--sp-2) var(--sp-4);
+  font-size: var(--fs-sm);
+  color: rgba(243, 246, 250, 0.92);
+}
+.auth-identity-footer.glass-card { padding: var(--sp-3) var(--sp-4); }
+
+/* ---------- Form card ---------- */
+.auth-form-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-form-card {
+  width: 100%;
+  max-width: 420px;
+  padding: var(--sp-6);
+}
+
+.auth-form-card h2 { margin-bottom: var(--sp-1); }
+.auth-form-card .auth-sub {
+  color: var(--ink-muted);
+  margin-bottom: var(--sp-6);
+}
+
+.auth-footer-link {
+  margin-top: var(--sp-5);
+  text-align: center;
+  font-size: var(--fs-sm);
+  color: var(--ink-muted);
+}
+
+.auth-back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  font-size: var(--fs-sm);
+  color: var(--ink-muted);
+  margin-bottom: var(--sp-5);
+}
+
+/* Password field with a visibility toggle button inside it. The
+   toggle sits INSIDE the input's right edge, vertically centred, never
+   overlapping the typed text - see the fixed height/positioning below,
+   which keeps the icon inside the field rather than outside/below it. */
+.field-password { position: relative; }
+.field-password input { padding-right: 2.75rem; }
+.field-password-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 42px;
+  width: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--ink-muted);
+  cursor: pointer;
+  border-radius: 0 var(--r-field) var(--r-field) 0;
+}
+.field-password-toggle:hover { color: var(--ink); }
+.field-password-toggle:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; }
+
+@media (max-width: 860px) {
+  .auth-shell { grid-template-columns: 1fr; max-width: 460px; gap: var(--sp-5); }
+  .auth-identity { text-align: center; padding: 0; }
+  .auth-identity h1 { max-width: none; font-size: 1.75rem; margin-top: var(--sp-4); }
+  .auth-identity p { max-width: none; margin-inline: auto; }
+  .auth-mark { display: none; } /* the form card's own back-link already orients the visitor on mobile */
+  .auth-form-card { padding: var(--sp-5); }
+}
+
+@media (max-width: 480px) {
+  body.auth-body { padding: var(--sp-3); background-attachment: scroll; }
+  .auth-form-card { padding: var(--sp-4); }
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rooms — Smart Hostel Allocation System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body class="app-body">
+
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><i class="fa-solid fa-user-shield"></i> Smart Hostel</div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-link" href="/admin/applications.html"><i class="fa-solid fa-file-lines"></i> Applications</a>
+      <a class="sidebar-link" href="/admin/rooms.html"><i class="fa-solid fa-door-open"></i> Rooms</a>
+      <a class="sidebar-link" href="/admin/sessions.html"><i class="fa-solid fa-calendar-days"></i> Sessions</a>
+      <a class="sidebar-link" href="/admin/fees.html"><i class="fa-solid fa-naira-sign"></i> Hostel Fees</a>
+      <a class="sidebar-link" href="/admin/misc-charges.html"><i class="fa-solid fa-receipt"></i> Misc. Charges</a>
+      <a class="sidebar-link" href="/admin/renewals.html"><i class="fa-solid fa-rotate"></i> Renewals</a>
+      <a class="sidebar-link" href="/admin/complaints.html"><i class="fa-solid fa-comments"></i> Complaints</a>
+    </nav>
+    <div class="sidebar-foot">
+      <button class="sidebar-logout" data-action="logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="topbar">
+      <div class="row" style="gap: var(--sp-3)">
+        <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        <span class="topbar-title">Rooms</span>
+      </div>
+      <div class="topbar-user">
+        <span class="badge is-hidden" id="topbar-session"></span>
+        <span id="topbar-user-name">—</span>
+        <span class="avatar" id="topbar-avatar">—</span>
+      </div>
+    </header>
+
+    <main class="app-content" id="rooms-root">
+      <div class="page-header">
+        <h1>Hostel rooms</h1>
+        <p>Occupancy is derived from actual allocations and cannot be edited directly. You can activate/deactivate a room or adjust a shared room's capacity.</p>
+      </div>
+
+      <div class="alert" id="rooms-error" role="alert"></div>
+
+      <form class="filter-bar panel" id="rooms-filter-form">
+        <div class="field">
+          <label for="filter-block">Block</label>
+          <select id="filter-block" name="block_id">
+            <option value="">All blocks</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="filter-gender">Gender</label>
+          <select id="filter-gender" name="gender">
+            <option value="">All genders</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="filter-room-type">Room type</label>
+          <select id="filter-room-type" name="room_type">
+            <option value="">All types</option>
+            <option value="single">Single</option>
+            <option value="shared">Shared</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="filter-occupancy">Occupancy</label>
+          <select id="filter-occupancy" name="occupancy_status">
+            <option value="">Any</option>
+            <option value="vacant">Vacant</option>
+            <option value="partial">Partially occupied</option>
+            <option value="full">Full</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Filter</button>
+        <button type="reset" class="btn btn-secondary">Clear</button>
+      </form>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Block</th>
+              <th>Gender</th>
+              <th>Room</th>
+              <th>Type</th>
+              <th>Capacity</th>
+              <th>Occupied</th>
+              <th>Available</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="rooms-table-body"></tbody>
+        </table>
+
+        <div class="empty-state is-hidden" id="rooms-empty">
+          <h3>No rooms found.</h3>
+          <p>No rooms match the current filters.</p>
+        </div>
+      </div>
+
+      <div class="panel is-hidden" id="room-manage-panel" style="max-width: 420px; margin-top: var(--sp-5)"></div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/admin.js"></script>
+  <script src="/js/rooms.js"></script>
+</body>
+</html>

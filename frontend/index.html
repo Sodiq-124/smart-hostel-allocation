@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title> Smart Hostel Allocation System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="/css/global.css" />
+  <style>
+    /*
+     * Landing-page-only styles. Kept scoped to this file rather than
+     * added to global.css, since nothing here is reused by another
+     * page. Every colour below is still a token from global.css, so
+     * the page stays in step with the rest of the system automatically.
+     *
+     * The hero section is a full-bleed photo of the campus
+     * (frontend/images/campus.jpg) with a glassmorphism nav bar and a
+     * solid-white content card floating over it. The feature strip
+     * below stays on plain white: the glass effect is confined to the
+     * hero rather than spread across the whole page.
+     */
+    .home-hero-section {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-image: url('/images/campus.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .home-hero-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(18, 54, 103, 0.82) 0%, rgba(16, 25, 42, 0.68) 45%, rgba(16, 25, 42, 0.85) 100%);
+    }
+
+    .home-nav {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--sp-4);
+      padding: var(--sp-4) var(--sp-5);
+      max-width: var(--content-max);
+      width: 100%;
+      margin-inline: auto;
+    }
+    .home-nav .auth-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-2);
+      font-weight: 700;
+      color: #fff;
+      padding: var(--sp-2) var(--sp-4);
+    }
+    .home-nav .auth-mark i { font-size: 1.2em; color: var(--secondary); }
+
+    .home-hero {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--sp-6) var(--sp-5) var(--sp-8);
+    }
+    .home-hero-card {
+      max-width: 640px;
+      width: 100%;
+      padding: var(--sp-7) var(--sp-6);
+      text-align: center;
+    }
+    .home-hero .eyebrow {
+      display: inline-block;
+      font-size: var(--fs-sm);
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--secondary-dark);
+      background: var(--secondary-tint);
+      padding: 0.3rem var(--sp-3);
+      border-radius: var(--r-pill);
+      margin-bottom: var(--sp-4);
+    }
+    .home-hero h1 {
+      font-size: var(--fs-2xl);
+      font-weight: 800;
+      line-height: 1.12;
+      margin-bottom: var(--sp-4);
+    }
+    .home-hero p {
+      max-width: 52ch;
+      margin-inline: auto;
+      color: var(--ink-muted);
+      font-size: var(--fs-md);
+      margin-bottom: var(--sp-6);
+    }
+
+    .home-actions {
+      display: flex;
+      justify-content: center;
+      gap: var(--sp-3);
+      flex-wrap: wrap;
+      margin-bottom: var(--sp-4);
+    }
+    .home-actions .btn { min-width: 160px; }
+
+    .home-admin-link {
+      font-size: var(--fs-sm);
+      color: var(--ink-muted);
+    }
+
+    .home-strip {
+      background: var(--surface);
+      padding: var(--sp-7) var(--sp-5);
+    }
+    .home-strip-inner {
+      max-width: var(--content-max);
+      margin-inline: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--sp-5);
+    }
+    .home-feature {
+      display: flex;
+      gap: var(--sp-3);
+    }
+    .home-feature-icon {
+      flex-shrink: 0;
+      width: 40px; height: 40px;
+      border-radius: var(--r-field);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+    }
+    /* Same decorative colour-cycling used on the student dashboard
+       cards (css/student.css) - brand, secondary, accent in order. */
+    .home-feature:nth-child(1) .home-feature-icon { background: var(--brand-tint); color: var(--brand-dark); }
+    .home-feature:nth-child(2) .home-feature-icon { background: var(--secondary-tint); color: var(--secondary-dark); }
+    .home-feature:nth-child(3) .home-feature-icon { background: var(--accent-tint); color: var(--accent-dark); }
+
+    .home-feature h3 { font-size: var(--fs-base); margin-bottom: var(--sp-1); }
+    .home-feature p { margin: 0; font-size: var(--fs-sm); color: var(--ink-muted); max-width: none; }
+
+    .home-footer {
+      text-align: center;
+      padding: var(--sp-6) var(--sp-5);
+      font-size: var(--fs-sm);
+      color: var(--ink-faint);
+    }
+
+    @media (max-width: 640px) {
+      .home-hero-card { padding: var(--sp-5); }
+      .home-hero h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="home-hero-section">
+    <nav class="home-nav">
+      <span class="auth-mark glass-card"><i class="fa-solid fa-building-shield"></i> Smart Hostel</span>
+      <a class="btn btn-secondary btn-sm" href="/login.html">Log in</a>
+    </nav>
+
+    <div class="home-hero">
+      <div class="home-hero-card glass-form-card">
+        
+        <h1>Smart Hostel Allocation System</h1>
+        <p>
+          An efficient digital platform for managing student hostel applications,
+          room allocation, and hostel payments — from application to receipt.
+        </p>
+
+        <div class="home-actions">
+          <a class="btn btn-primary" href="/login.html">Log in</a>
+          <a class="btn btn-secondary" href="/register.html">Register</a>
+        </div>
+
+        <p class="home-admin-link">
+          Hostel staff: <a href="/admin/login.html">Administrator login</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section class="home-strip">
+      <div class="home-strip-inner">
+        <div class="home-feature">
+          <div class="home-feature-icon"><i class="fa-solid fa-file-lines"></i></div>
+          <div>
+            <h3>Apply online</h3>
+            <p>Submit your hostel application and track its status without visiting the hostel office.</p>
+          </div>
+        </div>
+        <div class="home-feature">
+          <div class="home-feature-icon"><i class="fa-solid fa-door-open"></i></div>
+          <div>
+            <h3>Fair allocation</h3>
+            <p>Rooms are assigned by hostel management based on availability and your preferences.</p>
+          </div>
+        </div>
+        <div class="home-feature">
+          <div class="home-feature-icon"><i class="fa-solid fa-naira-sign"></i></div>
+          <div>
+            <h3>Secure payment</h3>
+            <p>Pay your hostel fee online once your room is allocated, and keep a digital receipt.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="home-footer">
+    &copy; 2026 &middot;  Smart Hostel Allocation System.
+  </footer>
+
+</body>
+</html>

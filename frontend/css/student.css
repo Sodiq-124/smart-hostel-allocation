@@ -1,0 +1,257 @@
+/* =====================================================================
+   student.css
+   Loaded on every page under /student/.
+   ---------------------------------------------------------------------
+   Layout: a fixed sidebar (the block/floor list of the whole app) plus
+   a topbar carrying the page title and the signed-in student's name.
+   Admin pages reuse this exact shell in admin.css with only the accent
+   swapped, so the two areas read as one system, not two projects
+   stitched together.
+   ===================================================================== */
+
+body.app-body {
+  background: var(--paper);
+  min-height: 100vh;
+}
+
+/* ---------- Sidebar ---------- */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: var(--sidebar-w);
+  background: var(--brand-dark);
+  color: var(--ink-inverse);
+  display: flex;
+  flex-direction: column;
+  z-index: 40;
+  transition: transform var(--transition);
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-5) var(--sp-5) var(--sp-4);
+  font-weight: 700;
+  font-size: var(--fs-base);
+  color: #fff;
+  border-bottom: 1px solid rgba(243, 246, 250, 0.12);
+}
+.sidebar-brand i { font-size: 1.2em; }
+
+.sidebar-nav {
+  flex: 1;
+  padding: var(--sp-4) var(--sp-3);
+  overflow-y: auto;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: 0.65rem var(--sp-3);
+  margin-bottom: var(--sp-1);
+  border-radius: var(--r-field);
+  color: rgba(243, 246, 250, 0.78);
+  text-decoration: none;
+  font-size: var(--fs-base);
+  font-weight: 500;
+  transition: background var(--transition), color var(--transition);
+}
+.sidebar-link i { width: 1.1em; text-align: center; font-size: 0.95em; }
+
+.sidebar-link:hover { background: rgba(243, 246, 250, 0.08); color: #fff; }
+
+.sidebar-link.is-active {
+  background: var(--surface);
+  color: var(--brand-dark);
+  font-weight: 600;
+}
+
+.sidebar-foot {
+  padding: var(--sp-3);
+  border-top: 1px solid rgba(243, 246, 250, 0.12);
+}
+
+.sidebar-logout {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: 0.65rem var(--sp-3);
+  background: none;
+  border: none;
+  color: rgba(243, 246, 250, 0.78);
+  font-family: inherit;
+  font-size: var(--fs-base);
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: var(--r-field);
+  text-align: left;
+}
+.sidebar-logout:hover { background: rgba(243, 246, 250, 0.08); color: #fff; }
+
+/* Mobile: sidebar becomes an off-canvas drawer. */
+.sidebar-backdrop {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(16, 28, 24, 0.4);
+  z-index: 30;
+}
+
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.is-open { transform: translateX(0); }
+  .sidebar-backdrop.is-open { display: block; }
+}
+
+/* ---------- Main area ---------- */
+.app-main {
+  margin-left: var(--sidebar-w);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 900px) {
+  .app-main { margin-left: 0; }
+}
+
+.topbar {
+  height: var(--topbar-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: 0 var(--sp-5);
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.topbar-title { font-weight: 700; font-size: var(--fs-md); }
+
+.sidebar-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--ink);
+  cursor: pointer;
+  padding: var(--sp-2);
+}
+@media (max-width: 900px) { .sidebar-toggle { display: inline-flex; } }
+
+.topbar-user {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: var(--fs-sm);
+}
+
+.avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--brand-tint);
+  color: var(--brand-dark);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  font-size: var(--fs-sm);
+}
+
+.app-content {
+  flex: 1;
+  padding: var(--sp-6) var(--sp-5);
+  max-width: 1080px;
+  width: 100%;
+}
+
+.page-header { margin-bottom: var(--sp-6); }
+.page-header h1 { margin-bottom: var(--sp-1); }
+.page-header p { color: var(--ink-muted); margin: 0; }
+
+/* ---------- Dashboard cards ---------- */
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-panel);
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.stat-card-icon {
+  width: 40px; height: 40px;
+  border-radius: var(--r-field);
+  display: flex; align-items: center; justify-content: center;
+  background: var(--brand-tint);
+  color: var(--brand-dark);
+  font-size: 1.1rem;
+}
+
+/* Decorative variety across the three dashboard cards - Application
+   uses brand (the default above), Room uses secondary, Payment uses
+   accent. Purely visual: none of these three cards' actual STATUS
+   badges use these colours, only the icon chip behind them. */
+.stat-card-icon.is-secondary { background: var(--secondary-tint); color: var(--secondary-dark); }
+.stat-card-icon.is-accent    { background: var(--accent-tint);    color: var(--accent-dark); }
+
+.stat-card-label {
+  font-size: var(--fs-sm);
+  color: var(--ink-muted);
+  font-weight: 600;
+}
+
+.stat-card-value {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+}
+
+.stat-card-meta {
+  font-size: var(--fs-sm);
+  color: var(--ink-muted);
+}
+
+/* ---------- Skeleton loading ---------- */
+.skeleton {
+  background: linear-gradient(90deg, var(--surface-sunken) 25%, var(--line) 37%, var(--surface-sunken) 63%);
+  background-size: 400% 100%;
+  animation: skeleton-loading 1.4s ease infinite;
+  border-radius: var(--r-field);
+  color: transparent !important;
+}
+@keyframes skeleton-loading { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
+
+/* ---------- Info panel (profile read-only rows) ---------- */
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-3) 0;
+  border-bottom: 1px solid var(--line);
+}
+.info-row:last-child { border-bottom: none; }
+.info-row-label { color: var(--ink-muted); font-size: var(--fs-sm); }
+.info-row-value { font-weight: 600; text-align: right; }
+
+/* ---------- Availability hint (apply-room page) ----------
+   A small live-updating line under the room type / block selects,
+   telling the student roughly how much space is currently available
+   for the combination they picked - sourced from the database via
+   GET /api/applications/room-options, never hardcoded. */
+.availability-hint {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3);
+  border-radius: var(--r-field);
+  background: var(--surface-sunken);
+  font-size: var(--fs-sm);
+  color: var(--ink-muted);
+  margin-bottom: var(--sp-4);
+}
+.availability-hint.has-space { background: var(--status-good-tint); color: var(--status-good-dark); }
+.availability-hint.no-space { background: var(--signal-tint); color: var(--signal); }

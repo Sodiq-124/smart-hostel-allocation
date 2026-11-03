@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard —  Smart Hostel Allocation System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/student.css" />
+</head>
+<body class="app-body">
+
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><i class="fa-solid fa-building-shield"></i>  Smart Hostel</div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-link" href="/student/dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+      <a class="sidebar-link" href="/student/profile.html"><i class="fa-solid fa-user"></i> Profile</a>
+      <a class="sidebar-link" href="/student/apply-room.html"><i class="fa-solid fa-door-open"></i> Apply for Room</a>
+      <a class="sidebar-link" href="/student/application.html"><i class="fa-solid fa-file-lines"></i> My Application</a>
+      <a class="sidebar-link" href="/student/complaints.html"><i class="fa-solid fa-triangle-exclamation"></i> Complaints</a>
+      <a class="sidebar-link" href="/student/payment.html"><i class="fa-solid fa-naira-sign"></i> Payment</a>
+      <a class="sidebar-link" href="/student/misc-charges.html"><i class="fa-solid fa-receipt"></i> Other Charges</a>
+      <a class="sidebar-link" href="/student/renewal.html"><i class="fa-solid fa-rotate"></i> Room Renewal</a>
+    </nav>
+    <div class="sidebar-foot">
+      <button class="sidebar-logout" data-action="logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="topbar">
+      <div class="row" style="gap: var(--sp-3)">
+        <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        <span class="topbar-title">Dashboard</span>
+      </div>
+      <div class="topbar-user">
+        <span id="topbar-user-name">—</span>
+        <span class="avatar" id="topbar-avatar">—</span>
+      </div>
+    </header>
+
+    <main class="app-content" id="dashboard-root">
+      <div class="page-header">
+        <h1 id="dashboard-greeting">Welcome back.</h1>
+        <p>Here's the current state of your hostel application.</p>
+      </div>
+
+      <div class="grid grid-3" style="margin-bottom: var(--sp-5)">
+        <div class="stat-card">
+          <div class="stat-card-icon"><i class="fa-solid fa-file-lines"></i></div>
+          <div class="stat-card-label">Application Status</div>
+          <div class="stat-card-value skeleton" id="stat-application-status">Loading</div>
+          <div class="stat-card-meta" id="stat-application-meta">&nbsp;</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-icon is-secondary"><i class="fa-solid fa-door-closed"></i></div>
+          <div class="stat-card-label">Room</div>
+          <div class="stat-card-value skeleton" id="stat-room-status">Loading</div>
+          <div class="stat-card-meta" id="stat-room-meta">&nbsp;</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-icon is-accent"><i class="fa-solid fa-naira-sign"></i></div>
+          <div class="stat-card-label">Payment Status</div>
+          <div class="stat-card-value skeleton" id="stat-payment-status">Loading</div>
+          <div class="stat-card-meta" id="stat-payment-meta">&nbsp;</div>
+        </div>
+      </div>
+
+      <div class="panel" id="dashboard-cta">
+        <p>Loading your application details…</p>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/student.js"></script>
+</body>
+</html>
